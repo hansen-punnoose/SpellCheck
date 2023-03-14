@@ -1,7 +1,9 @@
 #ifndef SPELLCHECKER_BLOOM_FILTER_H
 #define SPELLCHECKER_BLOOM_FILTER_H
 
-#include <vector>  // include the <vector> header file
+#include <vector> 
+#include <string>
+
 
 class BloomFilter {
 public:
