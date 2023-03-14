@@ -1,17 +1,33 @@
+# Compiler and compiler flags
 CC=g++
-CFLAGS=-c -Wall
-LDFLAGS=
-SOURCES=$(wildcard src/*.cpp)
-OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=spell-check
+CFLAGS=-c -Wall -Iincludes
 
-all: $(SOURCES) $(EXECUTABLE)
+# Linker flags
+LDFLAGS=
+
+# Directories
+SRCDIR=src
+INCDIR=includes
+BINDIR=bin
+
+# Files
+SOURCES=$(wildcard $(SRCDIR)/*.cpp)
+OBJECTS=$(SOURCES:$(SRCDIR)/%.cpp=$(BINDIR)/%.o)
+EXECUTABLE=$(BINDIR)/spell-check
+
+# Targets
+all: $(BINDIR) $(EXECUTABLE)
+
+$(BINDIR):
+	mkdir -p $(BINDIR)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
-src/%.o: src/%.cpp
-	$(CC) $(CFLAGS) $< -o $@
+$(BINDIR)/%.o: $(SRCDIR)/%.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJECTS) $(EXECUTABLE)
+
+.PHONY: all clean
